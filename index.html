@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="sendBtn">Send Message</button>
+    <p id="message" style="display: none;">Message sent!</p>
+
+    <script type="module">
+        const btn_send = document.getElementById("sendBtn");
+        const message = document.getElementById("message");
+
+        btn_send.addEventListener("click", function() {
+            const options = {
+                to: ['+254787378324'], // Replace with the recipient's number
+                message: "I'm a lumberjack and its ok, I work all night and sleep all day"
+            };
+
+            // Send POST request to the server
+            fetch('http://localhost:3000/send-sms', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(options)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                message.style.display = "block"; // Show the message
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>
